@@ -1,10 +1,11 @@
+import AuthForm from '@/components/AuthForm'
 import React from 'react'
 
 type Props = {}
 
 function page({}: Props) {
   return (
-    <div>page</div>
+   <AuthForm type='sign-up' />
   )
 }
 
