@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { vapi } from "@/lib/vapi.sdk";
 import { toast } from "sonner";
 import { interviewer } from "@/constants";
+import { createFeedback } from "@/lib/actions/general.actions";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -66,11 +67,14 @@ function Agent({ userName, userId, type, interviewId, questions }: AgentProps) {
 
     console.log("Generate feedback here");
 
-    // TODO: Implement the logic to generate feedback based on the messages
-    const { success, id } = { success: true, id: "feedback-id" }; // Mocked response, replace with actual API call
+    const { success, feedbackId } = await createFeedback({
+      interviewId: interviewId!,
+      userId: userId!,
+      transcript: messages,
+    });
 
-    if (success && id) {
-      router.push(`/feedback/${id}`);
+    if (success && feedbackId) {
+      router.push(`/interview/${interviewId}/feedback`);
     } else {
       console.error("Failed to generate feedback");
       router.push("/");
