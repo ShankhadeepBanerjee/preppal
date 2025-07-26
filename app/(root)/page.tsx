@@ -30,7 +30,7 @@ const page = async () => {
             improve your skills with PrepPal.
           </p>
           <Button asChild className="btn-primary">
-            <Link href="/interview"> Start an Interview</Link>
+            <Link href="/interview"> Create an Interview</Link>
           </Button>
         </div>
 
