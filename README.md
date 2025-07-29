@@ -120,8 +120,3 @@ Contributions are what make the open-source community such an amazing place to l
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📧 Contact
-
-Shankhadeep Banerjee - [@shankhadeepb](https://twitter.com/shankhadeepb) - shankhadeepbanerjee@example.com
-
-Project Link: [https://github.com/ShankhadeepBanerjee/preppal](https://github.com/ShankhadeepBanerjee/preppal)
