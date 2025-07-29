@@ -87,7 +87,6 @@ function Agent({ userName, userId, type, interviewId, questions }: AgentProps) {
       if (type === "generate") router.push("/");
       else handleGenerateFeedback(messages);
     }
-    if (callStatus === CallStatus.FINISHED) router.push("/");
   }, [messages, callStatus, type, userId]);
 
   const handleCall = async () => {
