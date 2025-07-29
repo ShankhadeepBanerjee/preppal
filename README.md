@@ -1,6 +1,11 @@
 # PrepPal - AI Interview Practice Platform
+<p>
+  PrepPal is an AI-powered platform designed to help job seekers practice and perfect their interview skills. With realistic AI interviewers and detailed feedback, users can build confidence and improve their performance before the real interview.
+</p>
+<img width="1080" height="720" alt="image" src="https://github.com/user-attachments/assets/bee227f9-9431-4a09-a76f-a70121181d16" />
+<p></p>
 
-PrepPal is an innovative AI-powered platform designed to help job seekers practice and perfect their interview skills. With realistic AI interviewers and detailed feedback, users can build confidence and improve their performance before the real interview.
+
 
 ## 🌟 Key Features
 
