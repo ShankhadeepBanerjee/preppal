@@ -5,19 +5,25 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { getRandomInterviewCover } from "@/lib/utils";
 import DisplayTechIcons from "./DisplayTechIcons";
+import { getFeedbackByInterviewId } from "@/lib/actions/general.actions";
 
-function InterviewCard({
+async function InterviewCard({
   id,
   role,
   type,
   techstack,
   createdAt,
+  userId,
 }: InterviewCardProps) {
-  const feedback = null as Feedback | null; // Assuming Feedback type is defined elsewhere
+  const feedback =
+    id && userId
+      ? await getFeedbackByInterviewId({ interviewId: id, userId })
+      : null; // Assuming Feedback type is defined elsewhere
   const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
   const formattedDate = dayjs(
     feedback?.createdAt || createdAt || Date.now()
   ).format("MMM D, YYYY");
+
   return (
     <div className="card-border w-[360px] max-sm:w-full min-h-96">
       <div className="card-interview">
