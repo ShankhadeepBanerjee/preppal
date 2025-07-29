@@ -69,6 +69,7 @@ export async function createFeedback(params: CreateFeedbackParams): Promise<{
       )
       .join("\n");
 
+    // Generate feedback using AI
     const {
       object: {
         totalScore,
@@ -84,10 +85,46 @@ export async function createFeedback(params: CreateFeedbackParams): Promise<{
       schema: feedbackSchema,
       prompt: `
         You are an AI interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories. Be thorough and detailed in your analysis. Don't be lenient with the candidate. If there are mistakes or areas for improvement, point them out.
+        
         Transcript:
         ${formattedTranscript}
 
-        Please score the candidate from 0 to 100 in the following areas. Do not add categories other than the ones provided:
+        Please provide a detailed feedback response in the following JSON format:
+        {
+          "totalScore": [A single overall score from 0-100 representing the candidate's total performance],
+          "categoryScores": [
+            {
+              "name": "Communication Skills",
+              "score": [Score from 0-100 for clarity, articulation, structured responses],
+              "comment": "[Brief comment explaining the score]"
+            },
+            {
+              "name": "Technical Knowledge",
+              "score": [Score from 0-100 for understanding of key concepts for the role],
+              "comment": "[Brief comment explaining the score]"
+            },
+            {
+              "name": "Problem Solving",
+              "score": [Score from 0-100 for ability to analyze problems and propose solutions],
+              "comment": "[Brief comment explaining the score]"
+            },
+            {
+              "name": "Cultural Fit",
+              "score": [Score from 0-100 for alignment with company values and job role],
+              "comment": "[Brief comment explaining the score]"
+            },
+            {
+              "name": "Confidence and Clarity",
+              "score": [Score from 0-100 for confidence in responses, engagement, and clarity],
+              "comment": "[Brief comment explaining the score]"
+            }
+          ],
+          "strengths": ["List at least 2-3 key strengths observed during the interview"],
+          "areasForImprovement": ["List at least 2-3 areas where the candidate can improve"],
+          "finalAssessment": "[A comprehensive final assessment paragraph of 3-4 sentences summarizing the candidate's performance, potential fit for the role, and recommendation]"
+        }
+        
+        Please score the candidate from 0 to 100 in the following areas:
         - **Communication Skills**: Clarity, articulation, structured responses.
         - **Technical Knowledge**: Understanding of key concepts for the role.
         - **Problem-Solving**: Ability to analyze problems and propose solutions.
@@ -95,7 +132,7 @@ export async function createFeedback(params: CreateFeedbackParams): Promise<{
         - **Confidence & Clarity**: Confidence in responses, engagement, and clarity.
         `,
       system:
-        "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
+        "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories and provide a comprehensive feedback in JSON format.",
     });
 
     const feedbackData = {
