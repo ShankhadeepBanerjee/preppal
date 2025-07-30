@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -33,6 +34,7 @@ type FormType = "sign-in" | "sign-up";
 
 function AuthForm({ type }: { type: FormType }) {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formSchema = authFormSchema(type);
 
@@ -48,6 +50,7 @@ function AuthForm({ type }: { type: FormType }) {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
     try {
       if (type === "sign-in") {
         // Handle sign-in logic
@@ -110,6 +113,8 @@ function AuthForm({ type }: { type: FormType }) {
           error instanceof Error ? error.message : "Unknown error"
         }`
       );
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -152,8 +157,17 @@ function AuthForm({ type }: { type: FormType }) {
               type="password"
             />
 
-            <Button type="submit" className="btn">
-              {isSignIn ? "Sign In" : "Create an Account"}
+            <Button type="submit" className="btn" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <span className="flex items-center justify-center">
+                  <span className="h-4 w-4 rounded-full border-2 border-solid border-white border-t-transparent animate-spin mr-2"></span>
+                  {isSignIn ? "Signing In..." : "Creating Account..."}
+                </span>
+              ) : isSignIn ? (
+                "Sign In"
+              ) : (
+                "Create an Account"
+              )}
             </Button>
           </form>
         </Form>
