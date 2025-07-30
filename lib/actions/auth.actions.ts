@@ -2,6 +2,7 @@
 
 import { auth, db } from "@/firebase/admin";
 import { cookies } from "next/headers";
+import { auth as clientAuth } from "@/firebase/client";
 
 const ONE_WEEK_IN_MS = 60 * 60 * 24 * 7 * 1000;
 
@@ -110,7 +111,7 @@ export async function signIn(params: SignInParams) {
   }
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser(): Promise<User | null> {
   try {
     const cookieStore = await cookies();
     const sessionCookie = cookieStore.get("session")?.value;
@@ -143,4 +144,27 @@ export async function isAuthenticated() {
   const user = await getCurrentUser();
 
   return !!user;
+}
+
+export async function signOut() {
+  try {
+    const cookieStore = await cookies();
+
+    // Sign out from Firebase client-side
+    await clientAuth.signOut();
+
+    // Clear the session cookie
+    cookieStore.delete("session");
+
+    return {
+      success: true,
+      message: "Signed out successfully",
+    };
+  } catch (error) {
+    console.error("Error during sign out:", error);
+    return {
+      success: false,
+      message: "An error occurred during sign out. Please try again later.",
+    };
+  }
 }
