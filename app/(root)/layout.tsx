@@ -8,7 +8,6 @@ import {
 } from "@/lib/actions/auth.actions";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import TopLoader from "@/components/TopLoader";
 
 async function RootLayout({ children }: { children: ReactNode }) {
   const isUserAuthenticated = await isAuthenticated();
@@ -19,7 +18,6 @@ async function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="root-layout">
-      <TopLoader />
       <nav className="flex items-center justify-between p-4 ">
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.svg" alt="logo" width={38} height={32} />
